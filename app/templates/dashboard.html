@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<h2>My Tasks</h2>
+
+<form method="POST" class="mb-4">
+    {{ form.hidden_tag() }}
+    <div class="input-group">
+        {{ form.title(class="form-control", placeholder="New Task") }}
+        <button class="btn btn-success">{{ form.submit.label.text }}</button>
+    </div>
+</form>
+
+{% if tasks %}
+    <ul class="list-group">
+        {% for task in tasks %}
+            <li class="list-group-item d-flex justify-content-between align-items-center
+                        {% if task.completed %}list-group-item-success{% endif %}">
+                {{ task.title }}
+                <div>
+                    {% if not task.completed %}
+                        <a href="{{ url_for('main.complete', task_id=task.id) }}" class="btn btn-sm btn-outline-primary">Complete</a>
+                    {% endif %}
+                    <a href="{{ url_for('main.delete', task_id=task.id) }}" class="btn btn-sm btn-outline-danger">Delete</a>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No tasks yet. Add one above!</p>
+{% endif %}
+{% endblock %}
