@@ -1,7 +1,9 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+from .routes import main
 
+app.register_blueprint(main)
 db = SQLAlchemy()
 login_manager = LoginManager()
 
